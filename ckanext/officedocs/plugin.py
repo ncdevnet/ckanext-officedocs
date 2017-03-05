@@ -22,11 +22,21 @@ class OfficeDocsPlugin(plugins.SingletonPlugin):
         }
 
     def setup_template_variables(self, context, data_dict):
-        from urllib import quote_plus
-        url = quote_plus(data_dict["resource"]["url"])
+        #from urllib import quote_plus
+        #url = quote_plus(data_dict["resource"]["url"])
+        #return {
+        #    "resource_url": url
+        #}
+        from ckanext.cloudstorage.storage import ResourceCloudStorage
+        rcs = ResourceCloudStorage(data_dict["resource"])
+        import urllib
+        resource_url = rcs.get_url_from_filename(data_dict["resource"]["id"], data_dict["resource"]["name"])
+        encoded_url = urllib.quote(resource_url)
+
         return {
-            "resource_url": url
+            "resource_url": encoded_url
         }
+
 
     def can_view(self, data_dict):
         supported_formats = [
