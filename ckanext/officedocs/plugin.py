@@ -30,7 +30,7 @@ class OfficeDocsPlugin(plugins.SingletonPlugin):
         from ckanext.cloudstorage.storage import ResourceCloudStorage
         rcs = ResourceCloudStorage(data_dict["resource"])
         import urllib
-        from urlparse import urlparse
+        import urlparse
         resource_url = rcs.get_url_from_filename(data_dict["resource"]["id"], urlparse.urlsplit(data_dict["resource"]["url"]).path.split('/')[-1])
         encoded_url = urllib.quote(resource_url)
 
